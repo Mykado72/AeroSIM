@@ -5,11 +5,11 @@ using UnityEngine;
 public class PlaneControleur : MonoBehaviour
 {
 
-    [SerializeField] private float m_MaxEnginePower = 40f;        // The maximum output of the engine.
+    [SerializeField] public float m_MaxEnginePower = 40f;        // The maximum output of the engine.
     [SerializeField] private float m_ThrottleChangeSpeed = 0.3f;  // The speed with which the throttle changes.
     [SerializeField] private float m_DragIncreaseFactor = 0.004f; // how much drag should increase with speed.
-    [SerializeField] private Rigidbody rg;
-    [SerializeField] private float forwardSpeed;
+    [SerializeField] public Rigidbody rg;
+    [SerializeField] public float forwardSpeed;
     [SerializeField] private float edgeSpeed;
     [SerializeField] private float ascensionalSpeed;
     [SerializeField] private SurfacePortante[] surfacesPortantes;

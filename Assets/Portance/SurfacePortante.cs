@@ -6,7 +6,7 @@ public class SurfacePortante : MonoBehaviour {
 
   //  La portance verticale
   //  en newtons(N) d'une aile vaut :
-    [SerializeField] private float portance_verticale; // en Newtons
+    [SerializeField] public float portance_verticale; // en Newtons
     [SerializeField] private Vector3 vector_portance;
     [SerializeField] private float masse_volumique_air= 1.25f ; // masse volumique du fluide traversé en kg/m3
                                                              // air à 0°C = 1,293 à 20 °C = 1,204        
@@ -65,7 +65,6 @@ public class SurfacePortante : MonoBehaviour {
         {
             case SurfacePortante.Type.Aileron:
                 vitesse_relative = (vitesseRelativeFrontale);
-                vitesse_relative = Mathf.Clamp(vitesse_relative, 1, 27.2f);
                 pression_dynamique = (masse_volumique_air * vitesse_relative * vitesse_relative) / 2;
                 portance_verticale = pression_dynamique * surface * coef_portance;
 
@@ -77,13 +76,12 @@ public class SurfacePortante : MonoBehaviour {
                 {
                     vector_portance = -rg.transform.up * portance_verticale;                    
                 }
-                rg.AddForceAtPosition(vector_portance, pointApplicationForce.position, ForceMode.Impulse);
+                rg.AddForceAtPosition(vector_portance/10, pointApplicationForce.position, ForceMode.Impulse);
                 Debug.DrawRay(pointApplicationForce.position, -vector_portance / 10);
 
                 break;
             case SurfacePortante.Type.Elevator:
                 vitesse_relative = (vitesseRelativeFrontale+ vitesseRelativeLaterale * 0.25f + vitesseAscensionelle + 0.1f) / 2;
-                vitesse_relative = Mathf.Clamp(vitesse_relative, 0f, 27.2f);
                 pression_dynamique = (masse_volumique_air * vitesse_relative * vitesse_relative) / 2;
                 portance_verticale = pression_dynamique * surface * coef_portance;
 
@@ -95,16 +93,15 @@ public class SurfacePortante : MonoBehaviour {
                 {
                     vector_portance = -rg.transform.up * portance_verticale;
                 }
-                rg.AddForceAtPosition(vector_portance, pointApplicationForce.position, ForceMode.Impulse);
+                rg.AddForceAtPosition(vector_portance/10, pointApplicationForce.position, ForceMode.Impulse);
                 Debug.DrawRay(pointApplicationForce.position, -vector_portance/10);
                 break;
             case SurfacePortante.Type.Rudder:
                 vitesse_relative = (vitesseRelativeFrontale + vitesseRelativeLaterale) / 2;
-                vitesse_relative = Mathf.Clamp(vitesse_relative, 0f, 20);
                 pression_dynamique = (masse_volumique_air * vitesse_relative * vitesse_relative) / 2;
                 portance_verticale = pression_dynamique * surface * coef_portance;
                 vector_portance = -rg.transform.right * portance_verticale;
-                rg.AddForceAtPosition(vector_portance, pointApplicationForce.position, ForceMode.Impulse);
+                rg.AddForceAtPosition(vector_portance/10, pointApplicationForce.position, ForceMode.Impulse);
                 Debug.DrawRay(pointApplicationForce.position, vector_portance / 10);
                 break;
         }
