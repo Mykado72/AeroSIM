@@ -39,10 +39,11 @@ public class SurfacePortante : MonoBehaviour {
         switch (type)
         {
             case SurfacePortante.Type.Aileron:
-                pointApplicationForce.position= new Vector3(pointApplicationForce.position.x, rg.transform.position.y+rg.centerOfMass.y, rg.transform.position.z+rg.centerOfMass.z);
+                // pointApplicationForce.localPosition= new Vector3(pointApplicationForce.localPosition.x, pointApplicationForce.localPosition.y, pointApplicationForce.localPosition.z);
+                pointApplicationForce.localPosition = new Vector3(pointApplicationForce.localPosition.x, rg.centerOfMass.y, rg.centerOfMass.z);
                 break;
             case SurfacePortante.Type.Elevator:
-                pointApplicationForce.position = new Vector3(rg.transform.position.x+rg.centerOfMass.x, rg.transform.position.y+rg.centerOfMass.y, pointApplicationForce.position.z);
+                pointApplicationForce.localPosition = new Vector3(rg.centerOfMass.x, rg.centerOfMass.y, rg.centerOfMass.z);
                 break;
         }
     }
@@ -81,7 +82,7 @@ public class SurfacePortante : MonoBehaviour {
 
                 break;
             case SurfacePortante.Type.Elevator:
-                vitesse_relative = (vitesseRelativeFrontale+ vitesseRelativeLaterale * 0.25f + vitesseAscensionelle + 0.1f) / 2;
+                vitesse_relative = (vitesseRelativeFrontale); // + vitesseRelativeLaterale * 0.25f + vitesseAscensionelle + 0.1f) / 2;
                 pression_dynamique = (masse_volumique_air * vitesse_relative * vitesse_relative) / 2;
                 portance_verticale = pression_dynamique * surface * coef_portance;
 
@@ -101,7 +102,7 @@ public class SurfacePortante : MonoBehaviour {
                 pression_dynamique = (masse_volumique_air * vitesse_relative * vitesse_relative) / 2;
                 portance_verticale = pression_dynamique * surface * coef_portance;
                 vector_portance = -rg.transform.right * portance_verticale;
-                rg.AddForceAtPosition(vector_portance/10, pointApplicationForce.position, ForceMode.Impulse);
+                // rg.AddForceAtPosition(vector_portance/10, pointApplicationForce.position, ForceMode.Impulse);
                 Debug.DrawRay(pointApplicationForce.position, vector_portance / 10);
                 break;
         }

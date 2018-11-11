@@ -16,15 +16,25 @@ public class PlaneControleur : MonoBehaviour
     [SerializeField] private VitesseRelative vent;
     [SerializeField] public PlaneInputController PlaneInputs;
     [SerializeField] private SurfaceMobile[] surfacesMobiles; // Collection of control surfaces.
+    [SerializeField] private float m_RollEffect = 1f;             // The strength of effect for roll input.
+    [SerializeField] private float m_PitchEffect = 1f;            // The strength of effect for pitch input.
+    [SerializeField] private float m_YawEffect = 0.2f;            // The strength of effect for yaw input.
+
     public float Throttle { get; private set; }
     public float EnginePower;
     private float m_OriginalDrag;         // The drag when the scene starts.
     private float m_OriginalAngularDrag;  // The angular drag when the scene starts.
     private float m_AeroFactor;
     public Vector3 localVelocity;
+    public Transform CG;
+    private float rollTorque;
+    private float pitchTorque;
+    private float yawTorque;
     // Use this for initialization
     void Start()
     {
+        rg.centerOfMass = CG.localPosition;
+        // CG.localPosition = rg.centerOfMass;
         m_OriginalAngularDrag = rg.angularDrag;
         foreach (SurfacePortante surfacePortante in surfacesPortantes)
         {
@@ -43,9 +53,8 @@ public class PlaneControleur : MonoBehaviour
         CalculateSpeeds();
         CalculateDrag();
         ControlThrottle();
-
         CalculateLinearForces();
-
+        CalculateTorque();
         foreach (SurfacePortante surfacePortante in surfacesPortantes)
         {
             surfacePortante.vitesseRelativeFrontale = forwardSpeed;
@@ -165,6 +174,9 @@ public class PlaneControleur : MonoBehaviour
     {
         // Now calculate forces acting on the aeroplane:
         // we accumulate forces into this variable:
+        rollTorque = PlaneInputs.RollInput;
+        yawTorque = PlaneInputs.YawInput;
+        pitchTorque = PlaneInputs.PitchInput;
         var forces = Vector3.zero;
         // Add the engine power in the forward direction
         forces += EnginePower * transform.forward;
@@ -173,6 +185,25 @@ public class PlaneControleur : MonoBehaviour
         Debug.DrawRay(transform.position, forces/20);
         // Apply the calculated forces to the the Rigidbody
         rg.AddForce(forces, ForceMode.Acceleration);
+    }
+       
+    private void CalculateTorque()
+    {
+        // We accumulate torque forces into this variable:
+        var torque = Vector3.zero;
+        // Add torque for the pitch based on the pitch input.
+        torque += pitchTorque * m_PitchEffect * transform.right;
+        // Add torque for the yaw based on the yaw input.
+        torque += yawTorque * m_YawEffect * transform.up;
+        // Add torque for the roll based on the roll input.
+        torque += -rollTorque * m_RollEffect * transform.forward;
+        // Add torque for banked turning.
+        // torque += m_BankedTurnAmount * m_BankedTurnEffect * transform.up;
+        // The total torque is multiplied by the forward speed, so the controls have more effect at high speed,
+        // and little effect at low speed, or when not moving in the direction of the nose of the plane
+        // (i.e. falling while stalled)
+        Debug.Log(torque);
+        rg.AddTorque(torque*1000); // * ForwardSpeed * m_AeroFactor);
     }
 
     private void CalculateDrag()
