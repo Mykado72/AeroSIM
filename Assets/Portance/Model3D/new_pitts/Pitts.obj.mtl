@@ -1,0 +1,97 @@
+# File produced by Open Asset Import Library (http://www.assimp.sf.net)
+# (assimp v3.1.187496374)
+
+newmtl black
+Kd 0.0784314 0.0784314 0.0784314
+Ks 1 1 1
+Ke 0 0 0
+d 1
+Ns 17.2225
+illum 2
+
+newmtl bottom wing
+Kd 0.7 0.7 0.7
+Ks 1 1 1
+Ke 0 0 0
+d 1
+Ns 64
+illum 2
+map_Kd C:/pitts/bottom_wing.jpg
+bump C:/pitts/wing_bump.jpg
+map_bump C:/pitts/wing_bump.jpg
+
+newmtl canopy
+Kd 0.278431 0.388235 0.447059
+Ks 1 1 1
+Ke 0 0 0
+d 0.07
+Ns 36
+illum 2
+
+newmtl cone
+Kd 0.7 0.7 0.7
+Ks 1 1 1
+Ke 0 0 0
+d 1
+Ns 64
+illum 2
+map_Kd C:/pitts/fuselage.jpg
+
+newmtl elevator
+Kd 0.7 0.7 0.7
+Ks 1 1 1
+Ke 0 0 0
+d 1
+Ns 64
+illum 2
+map_Kd C:/pitts/elevator.jpg
+bump C://pitts/elevator.jpg
+map_bump C://pitts/elevator.jpg
+
+newmtl fuselage
+Kd 0.7 0.7 0.7
+Ks 1 1 1
+Ke 0 0 0
+d 1
+Ns 64
+illum 2
+map_Kd C://pitts/fuselage.jpg
+bump C:/pitts/fuselage_bump.jpg
+map_bump C:/pitts/fuselage_bump.jpg
+
+newmtl gray
+Kd 0.392157 0.392157 0.392157
+Ks 1 1 1
+Ke 0 0 0
+d 1
+Ns 16
+illum 2
+
+newmtl top wing
+Kd 0.7 0.7 0.7
+Ks 1 1 1
+Ke 0 0 0
+d 1
+Ns 64
+illum 2
+map_Kd C:/pitts/top_wing.jpg
+bump C://pitts/wing_bump.jpg
+map_bump C://pitts/wing_bump.jpg
+
+newmtl wheel pants
+Kd 0.7 0.7 0.7
+Ks 1 1 1
+Ke 0 0 0
+d 1
+Ns 64
+illum 2
+map_Kd C:/pitts/wheel_pants.jpg
+
+newmtl white
+Kd 0.7 0.7 0.7
+Ks 1 1 1
+Ke 0 0 0
+d 1
+Ns 64
+illum 2
+

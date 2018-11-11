@@ -14,7 +14,7 @@ public class PlaneControleur : MonoBehaviour
     [SerializeField] private float ascensionalSpeed;
     [SerializeField] private SurfacePortante[] surfacesPortantes;
     [SerializeField] private VitesseRelative vent;
-    [SerializeField] private PlaneInputController PlaneInputs;
+    [SerializeField] public PlaneInputController PlaneInputs;
     [SerializeField] private SurfaceMobile[] surfacesMobiles; // Collection of control surfaces.
     public float Throttle { get; private set; }
     public float EnginePower;

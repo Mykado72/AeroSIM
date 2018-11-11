@@ -1,0 +1,146 @@
+fileFormatVersion: 2
+guid: d8f6d1b47b9d1a241a9efa384d541e0c
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: biplane_complete:biplano_last:pCylinder32
+    100004: biplane_complete:flaps_biplane_last:pCube7
+    100006: biplane_complete:polySurface1
+    100008: biplane_complete:polySurface2
+    100010: biplane_complete:polySurface3
+    100012: biplane_complete:polySurface4
+    100014: biplane_complete:polySurface5
+    100016: biplane_complete:polySurface6
+    100018: biplane_complete:polySurface7
+    100020: biplane_complete:prop_biplane_last:polySurface27
+    100022: biplane_complete:transform1
+    100024: biplane_complete:transform2
+    100026: biplane_complete:wheels_biplane_last:polySurface7
+    400000: //RootNode
+    400002: biplane_complete:biplano_last:pCylinder32
+    400004: biplane_complete:flaps_biplane_last:pCube7
+    400006: biplane_complete:polySurface1
+    400008: biplane_complete:polySurface2
+    400010: biplane_complete:polySurface3
+    400012: biplane_complete:polySurface4
+    400014: biplane_complete:polySurface5
+    400016: biplane_complete:polySurface6
+    400018: biplane_complete:polySurface7
+    400020: biplane_complete:prop_biplane_last:polySurface27
+    400022: biplane_complete:transform1
+    400024: biplane_complete:transform2
+    400026: biplane_complete:wheels_biplane_last:polySurface7
+    2100000: biplane_complete_phong1
+    2100002: biplane_complete_phong2
+    2100004: biplane_complete_phong3
+    2100006: biplane_complete_phong4
+    2300000: biplane_complete:biplano_last:pCylinder32
+    2300002: biplane_complete:polySurface1
+    2300004: biplane_complete:polySurface2
+    2300006: biplane_complete:polySurface3
+    2300008: biplane_complete:polySurface4
+    2300010: biplane_complete:polySurface5
+    2300012: biplane_complete:polySurface6
+    2300014: biplane_complete:polySurface7
+    2300016: biplane_complete:prop_biplane_last:polySurface27
+    3300000: biplane_complete:biplano_last:pCylinder32
+    3300002: biplane_complete:polySurface1
+    3300004: biplane_complete:polySurface2
+    3300006: biplane_complete:polySurface3
+    3300008: biplane_complete:polySurface4
+    3300010: biplane_complete:polySurface5
+    3300012: biplane_complete:polySurface6
+    3300014: biplane_complete:polySurface7
+    3300016: biplane_complete:prop_biplane_last:polySurface27
+    4300000: biplane_complete:biplano_last:pCylinder32
+    4300002: biplane_complete:polySurface1
+    4300004: biplane_complete:polySurface2
+    4300006: biplane_complete:polySurface3
+    4300008: biplane_complete:polySurface4
+    4300010: biplane_complete:polySurface5
+    4300012: biplane_complete:polySurface6
+    4300014: biplane_complete:polySurface7
+    4300016: biplane_complete:prop_biplane_last:polySurface27
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
