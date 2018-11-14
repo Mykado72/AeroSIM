@@ -21,6 +21,8 @@ public class SurfacePortante : MonoBehaviour {
     [SerializeField] public float vitesseRelativeFrontale;
     [SerializeField] public float vitesseRelativeLaterale;
     [SerializeField] public float vitesseAscensionelle;
+    [SerializeField] public float vitesseChutte;
+    public float incidence;
     public Type type; // The type of control surface.
     public float amount; // The amount by which they can rotate.
     public enum Type // Flaps differ in position and rotation and are represented by different types.
@@ -59,29 +61,41 @@ public class SurfacePortante : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        vitesseRelativeFrontale = Mathf.Abs(vitesseRelativeFrontale);
+        Vector3 localVelocity = transform.InverseTransformDirection(rg.velocity);
+        float altitude = rg.transform.position.y;
+        masse_volumique_air = 1.25f * (1-(altitude / 10000));
+        // Vector3 localVelocity = rg.velocity;        
+        vitesseRelativeFrontale = localVelocity.z;
+        vitesseRelativeLaterale = localVelocity.x;
+        vitesseAscensionelle = localVelocity.y;
+        vitesseRelativeFrontale = Mathf.Clamp(vitesseRelativeFrontale,0,100);
         vitesseRelativeLaterale = Mathf.Abs(vitesseRelativeLaterale);
-        vitesseAscensionelle = Mathf.Abs(vitesseAscensionelle);
+        vitesseChutte = Mathf.Clamp(vitesseAscensionelle, -11, 0);
+
         switch (type)
         {
             case SurfacePortante.Type.Aileron:
+                // incidence = 1/(0.000000001f+Vector3.Angle(localVelocity, transform.forward));
+                incidence = Mathf.Abs((Vector3.Angle(new Vector3(0,0,vitesseRelativeFrontale), transform.forward)-90) % 90)/90;
                 vitesse_relative = (vitesseRelativeFrontale);
                 pression_dynamique = (masse_volumique_air * vitesse_relative * vitesse_relative) / 2;
-                portance_verticale = pression_dynamique * surface * coef_portance;
+                portance_verticale = pression_dynamique * surface * (coef_portance*(0.5f+incidence*0.25f));
 
                 if (Mathf.Sign(rg.transform.up.y)>0) 
                 {
                     vector_portance = rg.transform.up * portance_verticale;
+                    
                 }
                 else // aile à l'envers
                 {
-                    vector_portance = -rg.transform.up * portance_verticale;                    
+                    vector_portance = -rg.transform.up * portance_verticale;
                 }
                 rg.AddForceAtPosition(vector_portance/10, pointApplicationForce.position, ForceMode.Impulse);
                 Debug.DrawRay(pointApplicationForce.position, -vector_portance / 10);
 
                 break;
-            case SurfacePortante.Type.Elevator:
+            /* case SurfacePortante.Type.Elevator:
+                incidence = Vector3.Angle(localVelocity, transform.forward);
                 vitesse_relative = (vitesseRelativeFrontale); // + vitesseRelativeLaterale * 0.25f + vitesseAscensionelle + 0.1f) / 2;
                 pression_dynamique = (masse_volumique_air * vitesse_relative * vitesse_relative) / 2;
                 portance_verticale = pression_dynamique * surface * coef_portance;
@@ -98,6 +112,7 @@ public class SurfacePortante : MonoBehaviour {
                 Debug.DrawRay(pointApplicationForce.position, -vector_portance/10);
                 break;
             case SurfacePortante.Type.Rudder:
+                incidence = Vector3.Angle(localVelocity, -transform.forward);
                 vitesse_relative = (vitesseRelativeFrontale + vitesseRelativeLaterale) / 2;
                 pression_dynamique = (masse_volumique_air * vitesse_relative * vitesse_relative) / 2;
                 portance_verticale = pression_dynamique * surface * coef_portance;
@@ -105,6 +120,7 @@ public class SurfacePortante : MonoBehaviour {
                 // rg.AddForceAtPosition(vector_portance/10, pointApplicationForce.position, ForceMode.Impulse);
                 Debug.DrawRay(pointApplicationForce.position, vector_portance / 10);
                 break;
+            */
         }
         // Debug.DrawLine(pointApplicationForce.position, pointApplicationForce.position + vector_portance/100);
     }

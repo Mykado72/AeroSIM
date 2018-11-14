@@ -16,9 +16,9 @@ public class PlaneControleur : MonoBehaviour
     [SerializeField] private VitesseRelative vent;
     [SerializeField] public PlaneInputController PlaneInputs;
     [SerializeField] private SurfaceMobile[] surfacesMobiles; // Collection of control surfaces.
-    [SerializeField] private float m_RollEffect = 1f;             // The strength of effect for roll input.
-    [SerializeField] private float m_PitchEffect = 1f;            // The strength of effect for pitch input.
-    [SerializeField] private float m_YawEffect = 0.2f;            // The strength of effect for yaw input.
+    [SerializeField] private float m_RollEffect = 0.05f;             // The strength of effect for roll input.
+    [SerializeField] private float m_PitchEffect = 1000f;            // The strength of effect for pitch input.
+    [SerializeField] private float m_YawEffect = 1f;            // The strength of effect for yaw input.
 
     public float Throttle { get; private set; }
     public float EnginePower;
@@ -30,6 +30,8 @@ public class PlaneControleur : MonoBehaviour
     private float rollTorque;
     private float pitchTorque;
     private float yawTorque;
+    public float altitude;
+
     // Use this for initialization
     void Start()
     {
@@ -50,16 +52,19 @@ public class PlaneControleur : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        altitude = rg.transform.position.y;
         CalculateSpeeds();
         CalculateDrag();
         ControlThrottle();
         CalculateLinearForces();
         CalculateTorque();
+        AnimSurfaceMobile();
+    }
+
+    private void ModifSurfaceMobile()
+    {
         foreach (SurfacePortante surfacePortante in surfacesPortantes)
         {
-            surfacePortante.vitesseRelativeFrontale = forwardSpeed;
-            surfacePortante.vitesseRelativeLaterale = edgeSpeed;
-            surfacePortante.vitesseAscensionelle= ascensionalSpeed;
             switch (surfacePortante.type)
             {
                 case SurfacePortante.Type.Aileron:
@@ -83,12 +88,15 @@ public class PlaneControleur : MonoBehaviour
                 case SurfacePortante.Type.Rudder:
                     {
                         // Rudders rotate around their y axis, according to the plane's yaw input
-                        surfacePortante.surface = PlaneInputs.YawInput*surfacePortante.amount;
+                        surfacePortante.surface = PlaneInputs.YawInput * surfacePortante.amount;
                         break;
                     }
             }
         }
+    }
 
+    private void AnimSurfaceMobile()
+    {
         foreach (SurfaceMobile surfaceMobile in surfacesMobiles)
         {
             switch (surfaceMobile.type)
@@ -148,8 +156,8 @@ public class PlaneControleur : MonoBehaviour
     private void CalculateSpeeds()
     {
         // Forward speed is the speed in the planes's forward direction (not the same as its velocity, eg if falling in a stall)
-        localVelocity = transform.InverseTransformDirection(rg.velocity);
-        
+        localVelocity = transform.InverseTransformDirection(rg.velocity);        
+        // localVelocity = rg.velocity;
         forwardSpeed = localVelocity.z;
         edgeSpeed = localVelocity.x;
         ascensionalSpeed= localVelocity.y;
@@ -174,9 +182,6 @@ public class PlaneControleur : MonoBehaviour
     {
         // Now calculate forces acting on the aeroplane:
         // we accumulate forces into this variable:
-        rollTorque = PlaneInputs.RollInput;
-        yawTorque = PlaneInputs.YawInput;
-        pitchTorque = PlaneInputs.PitchInput;
         var forces = Vector3.zero;
         // Add the engine power in the forward direction
         forces += EnginePower * transform.forward;
@@ -192,18 +197,17 @@ public class PlaneControleur : MonoBehaviour
         // We accumulate torque forces into this variable:
         var torque = Vector3.zero;
         // Add torque for the pitch based on the pitch input.
-        torque += pitchTorque * m_PitchEffect * transform.right;
+        torque += PlaneInputs.PitchInput * m_PitchEffect * transform.right*(10 + forwardSpeed/10);
         // Add torque for the yaw based on the yaw input.
-        torque += yawTorque * m_YawEffect * transform.up;
+        torque += PlaneInputs.YawInput * m_YawEffect * transform.up*(1 + forwardSpeed/10);
         // Add torque for the roll based on the roll input.
-        torque += -rollTorque * m_RollEffect * transform.forward;
+        torque += -PlaneInputs.RollInput * m_RollEffect * transform.forward* (1+forwardSpeed/10);
         // Add torque for banked turning.
         // torque += m_BankedTurnAmount * m_BankedTurnEffect * transform.up;
         // The total torque is multiplied by the forward speed, so the controls have more effect at high speed,
         // and little effect at low speed, or when not moving in the direction of the nose of the plane
-        // (i.e. falling while stalled)
-        Debug.Log(torque);
-        rg.AddTorque(torque*1000); // * ForwardSpeed * m_AeroFactor);
+        // (i.e. falling while stalled)        
+        rg.AddTorque(torque* 100);
     }
 
     private void CalculateDrag()
